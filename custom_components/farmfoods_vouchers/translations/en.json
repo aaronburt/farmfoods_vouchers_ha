@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods Vouchers",
+        "description": "Paste the full voucher URL from your Farmfoods email. It looks like:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "Voucher URL"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to reach the Farmfoods voucher page. Check your internet connection and try again.",
+      "invalid_url": "The URL is missing required parameters or does not point to a valid Farmfoods voucher page."
+    },
+    "abort": {
+      "already_configured": "This Farmfoods account is already configured."
+    }
+  }
+}
