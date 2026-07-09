@@ -44,5 +44,4 @@ def parse_vouchers(html: str) -> list[dict]:
 
 
 def active_vouchers_section_exists(html: str) -> bool:
-    soup = BeautifulSoup(html, "html.parser")
-    return soup.find(id="active_vouchers") is not None
+    return len(parse_vouchers(html)) > 0

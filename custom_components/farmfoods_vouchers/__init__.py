@@ -10,7 +10,7 @@ from .coordinator import FarmfoodsCoordinator
 
 PLATFORMS = [Platform.SENSOR]
 
-SERVICE_MARK_USED_SCHEMA = vol.Schema(
+SERVICE_SCHEMA = vol.Schema(
     vol.All(
         {
             vol.Optional("code"): cv.string,
@@ -19,6 +19,8 @@ SERVICE_MARK_USED_SCHEMA = vol.Schema(
         cv.has_at_least_one_key("code", "id"),
     )
 )
+
+SERVICES = ("mark_used", "mark_unused")
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -32,36 +34,22 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    async def async_handle_mark_used(call: ServiceCall) -> None:
+    def _apply_to_sensors(method_name: str, call: ServiceCall) -> None:
         code = call.data.get("code")
         voucher_id = call.data.get("id")
         for entry_data in hass.data[DOMAIN].values():
             sensor = entry_data.get("sensor")
             if sensor:
-                sensor.mark_used(voucher_id=voucher_id, code=code)
+                getattr(sensor, method_name)(voucher_id=voucher_id, code=code)
 
-    async def async_handle_mark_unused(call: ServiceCall) -> None:
-        code = call.data.get("code")
-        voucher_id = call.data.get("id")
-        for entry_data in hass.data[DOMAIN].values():
-            sensor = entry_data.get("sensor")
-            if sensor:
-                sensor.mark_unused(voucher_id=voucher_id, code=code)
-
-    if not hass.services.has_service(DOMAIN, "mark_used"):
-        hass.services.async_register(
-            DOMAIN,
-            "mark_used",
-            async_handle_mark_used,
-            schema=SERVICE_MARK_USED_SCHEMA,
-        )
-    if not hass.services.has_service(DOMAIN, "mark_unused"):
-        hass.services.async_register(
-            DOMAIN,
-            "mark_unused",
-            async_handle_mark_unused,
-            schema=SERVICE_MARK_USED_SCHEMA,
-        )
+    for service_name in SERVICES:
+        if not hass.services.has_service(DOMAIN, service_name):
+            hass.services.async_register(
+                DOMAIN,
+                service_name,
+                lambda call, m=service_name: _apply_to_sensors(m, call),
+                schema=SERVICE_SCHEMA,
+            )
 
     return True
 
@@ -72,9 +60,8 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         hass.data[DOMAIN].pop(entry.entry_id)
 
     if not hass.data[DOMAIN]:
-        if hass.services.has_service(DOMAIN, "mark_used"):
-            hass.services.async_remove(DOMAIN, "mark_used")
-        if hass.services.has_service(DOMAIN, "mark_unused"):
-            hass.services.async_remove(DOMAIN, "mark_unused")
+        for service_name in SERVICES:
+            if hass.services.has_service(DOMAIN, service_name):
+                hass.services.async_remove(DOMAIN, service_name)
 
     return unload_ok
