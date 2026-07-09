@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods Vouchery",
+        "description": "Wklej pełny adres URL vouchera z wiadomości e-mail od Farmfoods. Wygląda on tak:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "Adres URL vouchera"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można uzyskać dostępu do strony z voucherami Farmfoods. Sprawdź połączenie internetowe i spróbuj ponownie.",
+      "invalid_url": "Adres URL nie zawiera wymaganych parametrów lub nie prowadzi do prawidłowej strony z voucherami Farmfoods."
+    },
+    "abort": {
+      "already_configured": "To konto Farmfoods jest już skonfigurowane."
+    }
+  }
+}

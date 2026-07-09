@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods قسائم",
+        "description": "الصق رابط القسيمة الكامل من بريدك الإلكتروني من Farmfoods. يبدو هكذا:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "رابط القسيمة"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "تعذر الوصول إلى صفحة قسائم Farmfoods. تحقق من اتصالك بالإنترنت وحاول مرة أخرى.",
+      "invalid_url": "الرابط يفتقد المعلمات المطلوبة أو لا يشير إلى صفحة قسائم Farmfoods صالحة."
+    },
+    "abort": {
+      "already_configured": "هذا الحساب في Farmfoods مُعدّ بالفعل."
+    }
+  }
+}

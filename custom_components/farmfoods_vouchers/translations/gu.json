@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods વાઉચર્સ",
+        "description": "તમારા Farmfoods ઈમેઈલમાંથી સંપૂર્ણ વાઉચર URL પેસ્ટ કરો. તે આના જેવું દેખાય છે:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "વાઉચર URL"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Farmfoods વાઉચર પૃષ્ઠ સુધી પહોંચવામાં અસમર્થ. તમારું ઈન્ટરનેટ કનેક્શન તપાસો અને ફરી પ્રયાસ કરો.",
+      "invalid_url": "URL માં જરૂરી પેરામીટર્સ ખૂટે છે અથવા તે માન્ય Farmfoods વાઉચર પૃષ્ઠ તરફ નિર્દેશ કરતું નથી."
+    },
+    "abort": {
+      "already_configured": "આ Farmfoods એકાઉન્ટ પહેલેથી જ ગોઠવાયેલ છે."
+    }
+  }
+}

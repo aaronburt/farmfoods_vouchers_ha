@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods واؤچرز",
+        "description": "اپنی Farmfoods ای میل سے مکمل واؤچر URL چسپاں کریں۔ یہ اس طرح نظر آتا ہے:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "واؤچر URL"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Farmfoods واؤچر صفحے تک رسائی ممکن نہیں۔ اپنا انٹرنیٹ کنکشن چیک کریں اور دوبارہ کوشش کریں۔",
+      "invalid_url": "URL میں ضروری پیرامیٹرز موجود نہیں ہیں یا یہ کسی درست Farmfoods واؤچر صفحے کی طرف اشارہ نہیں کرتا۔"
+    },
+    "abort": {
+      "already_configured": "یہ Farmfoods اکاؤنٹ پہلے سے ترتیب دیا گیا ہے۔"
+    }
+  }
+}

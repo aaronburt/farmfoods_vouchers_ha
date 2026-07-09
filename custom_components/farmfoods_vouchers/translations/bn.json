@@ -1,0 +1,20 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Farmfoods ভাউচার",
+        "description": "আপনার Farmfoods ইমেইল থেকে সম্পূর্ণ ভাউচার URL পেস্ট করুন। এটি দেখতে এরকম:\nhttps://www.farmfoods.co.uk/Vouchers?campaign_id=...&id=...&email_address=...",
+        "data": {
+          "voucher_url": "ভাউচার URL"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Farmfoods ভাউচার পৃষ্ঠায় পৌঁছানো যাচ্ছে না। আপনার ইন্টারনেট সংযোগ পরীক্ষা করুন এবং আবার চেষ্টা করুন।",
+      "invalid_url": "URL-এ প্রয়োজনীয় প্যারামিটার নেই বা এটি একটি বৈধ Farmfoods ভাউচার পৃষ্ঠায় নির্দেশ করছে না।"
+    },
+    "abort": {
+      "already_configured": "এই Farmfoods অ্যাকাউন্টটি ইতিমধ্যে কনফিগার করা হয়েছে।"
+    }
+  }
+}
