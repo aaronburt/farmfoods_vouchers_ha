@@ -1,14 +1,16 @@
 # Farmfoods Vouchers — Home Assistant Integration
 
-Scrapes your personal Farmfoods voucher page and exposes each active voucher as a Home Assistant sensor entity, with a companion button to mark each voucher as used.
+Scrapes your personal Farmfoods voucher page and exposes a combined sensor entity of all active vouchers, with companion services to mark individual vouchers as used.
 
 ## Features
 
-- Active vouchers appear automatically as sensor entities (state = voucher code)
-- Each sensor carries attributes: `discount`, `valid_from`, `expires`, `used`
-- A **Mark as Used** button per voucher — press it after redeeming to track what you've used
-- The `used` flag persists across Home Assistant restarts
-- Vouchers are automatically removed from HA when the Farmfoods site marks them as redeemed
+- Exposes a single sensor containing the list of active vouchers and their details
+- The sensor state displays the count of active, unused vouchers
+- Sensor carries attributes: `vouchers` (a list of all active vouchers), `total_vouchers`, and `unused_vouchers`
+- Each voucher in the list includes: `id`, `code`, `discount`, `valid_from`, `expires`, `used`
+- Companion services: `farmfoods_vouchers.mark_used` and `farmfoods_vouchers.mark_unused` to track voucher usage
+- The `used` flag status is restored and persists across Home Assistant restarts
+- Vouchers are automatically removed when they are no longer active/scraped on the Farmfoods website
 - Refreshes every 12 hours
 
 ## Requirements
@@ -35,42 +37,55 @@ Scrapes your personal Farmfoods voucher page and exposes each active voucher as 
 
 ## Entities
 
-For each active voucher, two entities are created:
+One sensor entity is created per configured email address:
 
-| Entity | Type | Example |
-|--------|------|---------|
-| `sensor.farmfoods_5_off_when_you_spend_60` | Sensor | State: `IJ-YP-GB-41` |
-| `button.mark_as_used_5_off_when_you_spend_60` | Button | Press to mark as used |
+| Entity | Type | Example State |
+|--------|------|---------------|
+| `sensor.farmfoods_email_address_com_vouchers` | Sensor | `3` (count of unused vouchers) |
 
 ### Sensor attributes
 
-| Attribute | Example |
-|-----------|---------|
-| `discount` | `£5 off when you spend £60` |
-| `valid_from` | `06/07/2026` |
-| `expires` | `13/07/2026` |
-| `used` | `false` |
+| Attribute | Description | Example |
+|-----------|-------------|---------|
+| `vouchers` | List of active vouchers | `[{"id": "...", "code": "...", "discount": "...", "valid_from": "...", "expires": "...", "used": false}]` |
+| `total_vouchers` | Total number of active vouchers | `3` |
+| `unused_vouchers` | Count of active, unused vouchers | `3` |
+
+## Services
+
+### Service `farmfoods_vouchers.mark_used`
+Marks a specific Farmfoods voucher as used.
+
+Parameters:
+- `code` (Optional): The voucher code (e.g., `IJ-YP-GB-41`).
+- `id` (Optional): The unique ID of the voucher.
+*(Note: At least one of `code` or `id` must be provided.)*
+
+### Service `farmfoods_vouchers.mark_unused`
+Marks a previously used Farmfoods voucher as unused.
+
+Parameters:
+- `code` (Optional): The voucher code (e.g., `IJ-YP-GB-41`).
+- `id` (Optional): The unique ID of the voucher.
+*(Note: At least one of `code` or `id` must be provided.)*
 
 ## Example automation
 
+You can use templates to loop through the vouchers. For example, to notify when a new voucher is available:
+
 ```yaml
 automation:
-  - alias: Notify when new Farmfoods voucher arrives
+  - alias: Notify all active Farmfoods vouchers
     trigger:
-      - platform: event
-        event_type: state_changed
-    condition:
-      - condition: template
-        value_template: >
-          {{ trigger.event.data.entity_id | regex_search('sensor.farmfoods_') and
-             trigger.event.data.new_state is not none and
-             trigger.event.data.old_state is none }}
+      - platform: state
+        entity_id: sensor.farmfoods_aaron_gmail_com_vouchers
     action:
       - service: notify.mobile_app
         data:
-          title: "New Farmfoods Voucher 🛒"
+          title: "Farmfoods Vouchers Update 🛒"
           message: >
-            {{ state_attr(trigger.event.data.entity_id, 'discount') }}
-            — Code: {{ states(trigger.event.data.entity_id) }}
-            — Expires: {{ state_attr(trigger.event.data.entity_id, 'expires') }}
+            Here are your active vouchers:
+            {% for voucher in state_attr('sensor.farmfoods_aaron_gmail_com_vouchers', 'vouchers') %}
+              - {{ voucher.discount }} (Code: {{ voucher.code }}, Expires: {{ voucher.expires }}, Used: {{ voucher.used }})
+            {% endfor %}
 ```

@@ -1,0 +1,33 @@
+mark_used:
+  name: Mark voucher as used
+  description: Marks a specific Farmfoods voucher as used.
+  fields:
+    code:
+      name: Code
+      description: The voucher code (e.g., IJ-YP-GB-41).
+      required: false
+      selector:
+        text:
+    id:
+      name: Voucher ID
+      description: The unique ID of the voucher (SHA-256 hash prefix).
+      required: false
+      selector:
+        text:
+
+mark_unused:
+  name: Mark voucher as unused
+  description: Marks a previously used Farmfoods voucher as unused.
+  fields:
+    code:
+      name: Code
+      description: The voucher code (e.g., IJ-YP-GB-41).
+      required: false
+      selector:
+        text:
+    id:
+      name: Voucher ID
+      description: The unique ID of the voucher (SHA-256 hash prefix).
+      required: false
+      selector:
+        text:
