@@ -101,3 +101,4 @@ By using this software, you agree to the following:
 *   **Use at your own risk:** This software is provided "as is", without warranty of any kind. The maintainers assume no liability for any issues, account bans, or consequences resulting from its use.
 *   **Web Scraping:** This integration automates the retrieval of your personal voucher data from the Farmfoods website. You are solely responsible for ensuring that your use of this integration complies with the Farmfoods website Terms of Service.
 *   **Trademarks:** The "Farmfoods" name, logos, and related trademarks are the property of Farmfoods Ltd or their respective owners. They are used here strictly for descriptive and identification purposes.
+*   **AI Assistance:** Parts of this project's code and documentation were generated with the assistance of AI to boost productivity. While reviewed for quality, please keep this in mind when using or contributing to the project.
