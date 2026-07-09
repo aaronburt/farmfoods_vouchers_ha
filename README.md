@@ -11,6 +11,7 @@ Scrapes your personal Farmfoods voucher page and exposes a combined sensor entit
 - Sensor carries attributes: `vouchers` (a list of all active vouchers), `total_vouchers`, and `unused_vouchers`
 - Each voucher in the list includes: `id`, `code`, `discount`, `valid_from`, `expires`, `used`
 - Companion services: `farmfoods_vouchers.mark_used` and `farmfoods_vouchers.mark_unused` to track voucher usage
+- Exposes a dedicated calendar entity displaying voucher validity periods as all-day events (prefixed with `[Used]` once marked as used)
 - The `used` flag status is restored and persists across Home Assistant restarts
 - Vouchers are automatically removed when they are no longer active/scraped on the Farmfoods website
 - Includes custom brand logo and icon support for the Home Assistant dashboard
@@ -40,11 +41,12 @@ Scrapes your personal Farmfoods voucher page and exposes a combined sensor entit
 
 ## Entities
 
-One sensor entity is created per configured email address:
+Two entities are created per configured email address:
 
-| Entity | Type | Example State |
-|--------|------|---------------|
+| Entity | Type | Example State / Behavior |
+|--------|------|--------------------------|
 | `sensor.farmfoods_email_address_com_vouchers` | Sensor | `3` (count of unused vouchers) |
+| `calendar.farmfoods_email_address_com_vouchers` | Calendar | Displays voucher validity ranges as all-day events |
 
 ### Sensor attributes
 
