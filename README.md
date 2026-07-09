@@ -1,5 +1,7 @@
 # Farmfoods Vouchers — Home Assistant Integration
 
+> **Disclaimer:** This is an unofficial, community-maintained project and is not affiliated with, endorsed by, or associated with Farmfoods Ltd in any way. Use at your own risk. The Farmfoods name and logo are trademarks of their respective owners.
+
 Scrapes your personal Farmfoods voucher page and exposes a combined sensor entity of all active vouchers, with companion services to mark individual vouchers as used.
 
 ## Features
@@ -90,3 +92,12 @@ automation:
               - {{ voucher.discount }} (Code: {{ voucher.code }}, Expires: {{ voucher.expires }}, Used: {{ voucher.used }})
             {% endfor %}
 ```
+
+## Legal Disclaimer
+
+This project is an unofficial, community-maintained integration and is **not affiliated with, endorsed by, or associated with Farmfoods Ltd** in any way. 
+
+By using this software, you agree to the following:
+*   **Use at your own risk:** This software is provided "as is", without warranty of any kind. The maintainers assume no liability for any issues, account bans, or consequences resulting from its use.
+*   **Web Scraping:** This integration automates the retrieval of your personal voucher data from the Farmfoods website. You are solely responsible for ensuring that your use of this integration complies with the Farmfoods website Terms of Service.
+*   **Trademarks:** The "Farmfoods" name, logos, and related trademarks are the property of Farmfoods Ltd or their respective owners. They are used here strictly for descriptive and identification purposes.
