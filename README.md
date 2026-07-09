@@ -11,6 +11,7 @@ Scrapes your personal Farmfoods voucher page and exposes a combined sensor entit
 - Companion services: `farmfoods_vouchers.mark_used` and `farmfoods_vouchers.mark_unused` to track voucher usage
 - The `used` flag status is restored and persists across Home Assistant restarts
 - Vouchers are automatically removed when they are no longer active/scraped on the Farmfoods website
+- Includes custom brand logo and icon support for the Home Assistant dashboard
 - Refreshes every 12 hours
 
 ## Requirements
@@ -85,7 +86,7 @@ automation:
           title: "Farmfoods Vouchers Update 🛒"
           message: >
             Here are your active vouchers:
-            {% for voucher in state_attr('sensor.farmfoods_aaron_gmail_com_vouchers', 'vouchers') %}
+            {% for voucher in state_attr('sensor.farmfoods_aaron_gmail_com_vouchers', 'vouchers') or [] %}
               - {{ voucher.discount }} (Code: {{ voucher.code }}, Expires: {{ voucher.expires }}, Used: {{ voucher.used }})
             {% endfor %}
 ```
