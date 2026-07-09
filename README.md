@@ -14,7 +14,7 @@ Scrapes your personal Farmfoods voucher page and exposes a combined sensor entit
 - The `used` flag status is restored and persists across Home Assistant restarts
 - Vouchers are automatically removed when they are no longer active/scraped on the Farmfoods website
 - Includes custom brand logo and icon support for the Home Assistant dashboard
-- Refreshes every 12 hours
+- Refreshes at a randomized interval between 12 and 16 hours
 
 ## Requirements
 

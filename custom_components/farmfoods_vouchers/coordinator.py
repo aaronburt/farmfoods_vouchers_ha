@@ -1,13 +1,14 @@
 import asyncio
-import logging
 from datetime import timedelta
+import logging
+import random
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import CONF_VOUCHER_URL, DEFAULT_SCAN_INTERVAL_HOURS, DOMAIN
+from .const import CONF_VOUCHER_URL, DOMAIN
 from .parser import parse_vouchers
 
 _LOGGER = logging.getLogger(__name__)
@@ -19,12 +20,17 @@ class FarmfoodsCoordinator(DataUpdateCoordinator[list[dict]]):
             hass,
             _LOGGER,
             name=DOMAIN,
-            update_interval=timedelta(hours=DEFAULT_SCAN_INTERVAL_HOURS),
+            update_interval=timedelta(
+                seconds=random.randint(12 * 3600, 16 * 3600)
+            ),
         )
         self._voucher_url: str = entry.data[CONF_VOUCHER_URL]
         self._session = async_get_clientsession(hass)
 
     async def _async_update_data(self) -> list[dict]:
+        self.update_interval = timedelta(
+            seconds=random.randint(12 * 3600, 16 * 3600)
+        )
         try:
             async with asyncio.timeout(15):
                 async with self._session.get(self._voucher_url) as response:
