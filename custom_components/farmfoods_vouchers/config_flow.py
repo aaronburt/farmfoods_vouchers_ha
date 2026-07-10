@@ -23,9 +23,13 @@ class FarmfoodsVouchersConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         if user_input is not None:
             url = user_input[CONF_VOUCHER_URL].strip()
-            params = parse_qs(urlparse(url).query)
+            parsed_url = urlparse(url)
+            params = parse_qs(parsed_url.query)
 
-            if not REQUIRED_URL_PARAMS.issubset(params.keys()):
+            if (
+                parsed_url.netloc.lower() not in ("farmfoods.co.uk", "www.farmfoods.co.uk")
+                or not REQUIRED_URL_PARAMS.issubset(params.keys())
+            ):
                 errors[CONF_VOUCHER_URL] = "invalid_url"
             else:
                 try:

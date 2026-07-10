@@ -2,6 +2,7 @@ import asyncio
 from datetime import timedelta
 import logging
 import random
+from urllib.parse import urlparse
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
@@ -31,6 +32,10 @@ class FarmfoodsCoordinator(DataUpdateCoordinator[list[dict]]):
         self.update_interval = timedelta(
             seconds=random.randint(12 * 3600, 16 * 3600)
         )
+        parsed_url = urlparse(self._voucher_url)
+        if parsed_url.netloc.lower() not in ("farmfoods.co.uk", "www.farmfoods.co.uk"):
+            raise UpdateFailed("Invalid voucher URL domain")
+
         try:
             async with asyncio.timeout(15):
                 async with self._session.get(self._voucher_url) as response:
